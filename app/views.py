@@ -33,12 +33,12 @@ class AutoresView(View):
 class EditorasView(View):
     def get(self, request, *args, **kwargs):
         editoras = Editora.objects.all()
-        return render(request, 'editora.html',{'editoras': editoras})
+        return render(request, 'editora.html',{'editoras':editoras})
     
 class LeitoresView(View):
     def get(self, request, *args, **kwargs):
         leitores = Leitor.objects.all()
-        return render(request, 'leitor.html',{'leitores': leitores})
+        return render(request, 'leitor.html',{'leitores':leitores})
     
 class GenerosView(View):
     def get(self, request, *args, **kwargs):

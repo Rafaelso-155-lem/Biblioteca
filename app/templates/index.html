@@ -7,8 +7,7 @@
 initial-scale=1.0">
     <title>Página Inicial</title>
     <!-- Incluindo Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.
-min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
@@ -58,13 +57,37 @@ navigation">
             <p class="lead">Seja Bem Vindo(A)</p>
         </div>
     </div>
-
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Autor</th>
+                <th scope="col">Editora</th>
+                <th scope="col">Gênero</th>
+                <th scope="col">Preço</th>
+                <th scope="col">Data Publicação</th>
+                <th scope="col">Status</th>
+                <th scope="col">Excluir</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for jorge in livros %}
+            <tr>
+                <td>{{ jorge.nome }}</td>
+                <td>{{ jorge.autor }}</td>
+                <td>{{ jorge.editora }}</td>
+                <td>{{ jorge.genero }}</td>
+                <td>{{ jorge.preco }}</td>
+                <td>{{ jorge.data_plub }}</td>
+                <td>{{ jorge.status }}</td>
+                <td><a href="delete/{{ jorge.id }}" class="btn btn-danger">Excluir</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     <!-- Incluindo jQuery e Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popp
-    er.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.mi
-n.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
 </html

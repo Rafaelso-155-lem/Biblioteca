@@ -1,94 +1,42 @@
-# Create your models here.
 from django.db import models
-class Cidade(models.Model):
-    nome = models.CharField(max_length=100, verbose_name="Nome da cidade")
-    uf = models.CharField(max_length=2, verbose_name="UF")
-    def __str__(self):
-        return f"{self.nome}, {self.uf}"
-    class Meta:
-        verbose_name = "Cidade"
-        verbose_name_plural = "Cidades"
 
+class Curso(models.Model):
+    nome = models.CharField(max_length=100)
+    codigo = models.CharField(max_length=10, unique=True)
 
-class Autor(models.Model):
-    nome = models.CharField(max_length=100, verbose_name="Nome do autor")
-    cidade = models.ForeignKey(Cidade, on_delete=models.CASCADE,verbose_name="Cidade do autor")
-    def __str__(self):
-        return self.nome
-    class Meta:
-        verbose_name = "Autor"
-        verbose_name_plural = "Autores"
+class Disciplina(models.Model):
+    nome = models.CharField(max_length=100)
+    codigo = models.CharField(max_length=10, unique=True)
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
 
-class Editora(models.Model):
-    nome = models.CharField(max_length=100, verbose_name="Nome da editora")
+class Professor(models.Model):
+    nome = models.CharField(max_length=100)
+    matricula = models.CharField(max_length=10, unique=True)
 
-    site = models.CharField(max_length=100, verbose_name="Site da editora")
+class Aluno(models.Model):
+    nome = models.CharField(max_length=100)
+    matricula = models.CharField(max_length=10, unique=True)
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
 
-    cidade = models.ForeignKey(Cidade, on_delete=models.CASCADE,verbose_name="Cidade da editora")
-    def __str__(self):
-        return self.nome
-    class Meta:
-        verbose_name = "Editora"
-        verbose_name_plural = "Editoras"
+class Turma(models.Model):
+    disciplina = models.ForeignKey(Disciplina, on_delete=models.CASCADE)
+    professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
+    ano = models.IntegerField()
+    semestre = models.IntegerField()
 
-class Leitor(models.Model):
-    nome = models.CharField(max_length=100, verbose_name="Nome do leitor")
+class Matricula(models.Model):
+    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
+    turma = models.ForeignKey(Turma, on_delete=models.CASCADE)
+    data_matricula = models.DateField()
 
-    email = models.CharField(max_length=100, verbose_name="Email do leitor")
+class Avaliacao(models.Model):
+    matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE)
+    nota = models.DecimalField(max_digits=4, decimal_places=2)
+    descricao = models.CharField(max_length=100)
 
-    cpf = models.CharField(max_length=11, unique=True,verbose_name="CPF do leitor")
-    def __str__(self):
-        return self.nome
-    class Meta:
-        verbose_name = "Leitor"
-        verbose_name_plural = "Leitores"
-
-class Genero(models.Model):
-    nome = models.CharField(max_length=100, verbose_name="Gênero")
-    def __str__(self):
-        return self.nome
-    class Meta:
-        verbose_name = "Gênero"
-        verbose_name_plural = "Gêneros"
-
-class Livro(models.Model):
-    nome = models.CharField(max_length=100, verbose_name="Nome do livro")
-    autor = models.ForeignKey(Autor, on_delete=models.CASCADE,verbose_name="Autor do livro")
-    editora = models.ForeignKey(Editora, on_delete=models.CASCADE,verbose_name="Editora do livro")
-    genero = models.ForeignKey(Genero, on_delete=models.CASCADE,verbose_name="Gênero do livro")
-    preco = models.IntegerField(verbose_name="Preço do livro")
-    data_plub = models.DateField(verbose_name="Data de publicação do livro")
-    status = models.BooleanField(verbose_name="Status do livro")
-
-    def __str__(self):
-        return f'{self.nome}, {self.autor}'
-    class Meta:
-        verbose_name = "Livro"
-        verbose_name_plural = "Livros"
-        
-
-class Genero(models.Model):
-    nome = models.CharField(max_length=100,verbose_name="Gênero")
-    def __str__(self):
-        return self.nome
-    
-class Meta:
-    verbose_name = "Gênero"
-    verbose_name_plural = "Gêneros"
-
-class Livro(models.Model):
-    nome = models.CharField(max_length=100, verbose_name="Nome do livro")
-    autor = models.ForeignKey(Autor, on_delete=models.CASCADE,verbose_name="Autor do livro")
-    editora = models.ForeignKey(Editora,on_delete=models.CASCADE, verbose_name="Editora do livro")
-    genero = models.ForeignKey(Genero,on_delete=models.CASCADE,verbose_name="Gênero do livro")
-    preco = models.IntegerField(verbose_name="Preço do livro")
-    data_plub = models.DateField(verbose_name="Data de publicação do livro")
-    status = models.BooleanField(verbose_name="Status do livro")
-
-def __str__(self):
-    return f'{self.nome}, {self.autor}'
-class Meta:
-    verbose_name = "Livro"
-    verbose_name_plural = "Livros"
-
+class Historico(models.Model):
+    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
+    disciplina = models.ForeignKey(Disciplina, on_delete=models.CASCADE)
+    nota_final = models.DecimalField(max_digits=4, decimal_places=2)
+    situacao = models.CharField(max_length=20)
 

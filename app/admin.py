@@ -1,23 +1,12 @@
 from django.contrib import admin
-from .models import *
+from .models import Curso, Disciplina, Professor, Aluno, Turma, Matricula, Avaliacao, Historico
 
+admin.site.register(Curso)
+admin.site.register(Disciplina)
+admin.site.register(Professor)
+admin.site.register(Aluno)
+admin.site.register(Turma)
+admin.site.register(Matricula)
+admin.site.register(Avaliacao)
+admin.site.register(Historico)
 
-admin.site.register(Cidade)
-admin.site.register(Editora)
-admin.site.register(Leitor)
-admin.site.register(Livro)
-admin.site.register(Genero)
-
-
-class LivroInline(admin.TabularInline):
-    model = Livro
-    extra = 1  
-
-
-class AutorAdmin(admin.ModelAdmin):
-    list_display = ('nome',)  
-    search_fields = ('nome',)  
-    inlines = [LivroInline]  
-
-
-admin.site.register(Autor, AutorAdmin)
